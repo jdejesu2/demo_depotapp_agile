@@ -54,4 +54,46 @@ bad.each do |image_url|
     end
 end
 
+fixtures :products
+ #...
+
+ test "product is not valid without a unique title" do
+   product = Product.new (title: products (:ruby).title,
+               description: "yyy",
+               price:  1,
+               image_url: "fred.jpg")
+   assert product.invalid?
+   assert_equal ["has already been taken"], product.errors[:title]
+ end
+
+ test "product is not valid without a unique - i18n" do
+   product = Product.new(title: product (:ruby).title,
+               description: "yyy",
+               price: 1,
+               image_url: "fred.gif")
+
+   assert product.invalid?
+   assert_equal [I18n.translate('errors.messages.taken')],
+   product.errors[:title]
+
+ end
+
+ def create
+   @product = Product.new(product_params)
+
+   responds_to do |format|
+     if @product.save
+       format.html { redirect_to @product,
+       notice: 'Product was successfully created.'}
+       format.json { render :show, status: :created,
+       location: @product}
+     else
+       puts @product.errors.full_messages
+       format.html { render :new}
+       format.json { render json: @product.errors,
+       status: :unprocessable_entity}
+     end
+   end
+ end
+
 end
