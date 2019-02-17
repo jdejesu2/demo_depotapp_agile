@@ -54,12 +54,4 @@ bad.each do |image_url|
     end
 end
 
-
-
-
-
-
-
-
-
 end
