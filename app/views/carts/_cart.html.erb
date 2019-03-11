@@ -3,6 +3,7 @@
   <aside id="notice"><%= notice %></aside>
   <% end %>
 
+<% unless cart.line_items.empty? %>
   <h2>Your cart</h2>
   <table>
 
@@ -18,4 +19,5 @@
                 method: :delete,
                 data: { confirm: 'Are you sure?'} %>
 
+<% end %>
   </article>
